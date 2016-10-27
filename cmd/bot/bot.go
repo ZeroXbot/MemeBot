@@ -77,10 +77,24 @@ type Sound struct {
 }
 
 // Array of all the sounds we have
+var FAJECZKI *SoundCollection = &SoundCollection {
+	Prefix: "fajeczki",
+	Commands: []string{
+		"!fajeczki",
+	},
+	Sounds: []*Sound{
+		createSound("ahus", 1000, 200),
+		createSound("tts1", 300, 200),
+		createSound("tts2", 300, 200),
+		createSound("tts3", 300, 200),
+		createSound("tts4", 100, 200),
+	},
+}
+
 var AIRHORN *SoundCollection = &SoundCollection{
 	Prefix: "airhorn",
 	Commands: []string{
-		"!airhorn",
+		"!airhornx",
 	},
 	Sounds: []*Sound{
 		createSound("default", 1000, 250),
@@ -104,8 +118,8 @@ var KHALED *SoundCollection = &SoundCollection{
 	Prefix:    "another",
 	ChainWith: AIRHORN,
 	Commands: []string{
-		"!anotha",
-		"!anothaone",
+		"!anothax",
+		"!anothaonex",
 	},
 	Sounds: []*Sound{
 		createSound("one", 1, 250),
@@ -117,8 +131,8 @@ var KHALED *SoundCollection = &SoundCollection{
 var CENA *SoundCollection = &SoundCollection{
 	Prefix: "jc",
 	Commands: []string{
-		"!johncena",
-		"!cena",
+		"!johncenax",
+		"!cenax",
 	},
 	Sounds: []*Sound{
 		createSound("airhorn", 1, 250),
@@ -133,10 +147,10 @@ var CENA *SoundCollection = &SoundCollection{
 var ETHAN *SoundCollection = &SoundCollection{
 	Prefix: "ethan",
 	Commands: []string{
-		"!ethan",
-		"!eb",
-		"!ethanbradberry",
-		"!h3h3",
+		"!ethanx",
+		"!ebx",
+		"!ethanbradberryx",
+		"!h3h3x",
 	},
 	Sounds: []*Sound{
 		createSound("areyou_classic", 100, 250),
@@ -156,8 +170,8 @@ var ETHAN *SoundCollection = &SoundCollection{
 var COW *SoundCollection = &SoundCollection{
 	Prefix: "cow",
 	Commands: []string{
-		"!stan",
-		"!stanislav",
+		"!stanx",
+		"!stanislavx",
 	},
 	Sounds: []*Sound{
 		createSound("herd", 10, 250),
@@ -169,8 +183,8 @@ var COW *SoundCollection = &SoundCollection{
 var BIRTHDAY *SoundCollection = &SoundCollection{
 	Prefix: "birthday",
 	Commands: []string{
-		"!birthday",
-		"!bday",
+		"!birthdayx",
+		"!bdayx",
 	},
 	Sounds: []*Sound{
 		createSound("horn", 50, 250),
@@ -183,8 +197,8 @@ var BIRTHDAY *SoundCollection = &SoundCollection{
 var WOW *SoundCollection = &SoundCollection{
 	Prefix: "wow",
 	Commands: []string{
-		"!wowthatscool",
-		"!wtc",
+		"!wowthatscoolx",
+		"!wtcx",
 	},
 	Sounds: []*Sound{
 		createSound("thatscool", 50, 250),
@@ -199,6 +213,7 @@ var COLLECTIONS []*SoundCollection = []*SoundCollection{
 	COW,
 	BIRTHDAY,
 	WOW,
+	FAJECZKI,
 }
 
 // Create a Sound struct
@@ -709,7 +724,7 @@ func main() {
 
 	// Create a discord session
 	log.Info("Starting discord session...")
-	discord, err = discordgo.New(*Token)
+	discord, err = discordgo.New("Bot " + *Token)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
