@@ -91,6 +91,56 @@ var FAJECZKI *SoundCollection = &SoundCollection {
 	},
 }
 
+var GITARA *SoundCollection = &SoundCollection {
+	Prefix: "gitara",
+	Commands: []string{
+		"!gitara",
+	},
+	Sounds: []*Sound{
+		createSound("ahus", 500, 200),
+		createSound("gargamel", 500, 200),
+		createSound("siema", 1000, 200),
+		createSound("giorgiani", 200, 200),
+		createSound("giorgianilong", 50, 200),
+		createSound("error", 5, 200),
+	},
+}
+
+var DOBRE *SoundCollection = &SoundCollection {
+	Prefix: "dobre",
+	Commands: []string{
+		"!dobre",
+	},
+	Sounds: []*Sound{
+		createSound("ahus", 800, 200),
+		createSound("gargamel", 1000, 200),
+		createSound("noname", 800, 200),
+	},
+}
+
+var KUR *SoundCollection = &SoundCollection {
+	Prefix: "kur",
+	Commands: []string{
+		"!kur",
+	},
+	Sounds: []*Sound{
+		createSound("dziwko", 50, 200),
+		createSound("pedale", 300, 200),
+		createSound("hamie", 1000, 200),
+	},
+}
+
+var REAKCJA *SoundCollection = &SoundCollection {
+	Prefix: "reakcja",
+	Commands: []string{
+		"!reakcja",
+	},
+	Sounds: []*Sound{
+		createSound("xd", 1000, 200),
+		createSound("uśmiech", 500, 200),
+	},
+}
+
 var AIRHORN *SoundCollection = &SoundCollection{
 	Prefix: "airhorn",
 	Commands: []string{
@@ -214,6 +264,10 @@ var COLLECTIONS []*SoundCollection = []*SoundCollection{
 	BIRTHDAY,
 	WOW,
 	FAJECZKI,
+	GITARA,
+	DOBRE,
+	KUR,
+	REAKCJA,
 }
 
 // Create a Sound struct
