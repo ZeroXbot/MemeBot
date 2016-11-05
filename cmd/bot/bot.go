@@ -137,7 +137,12 @@ var REAKCJA *SoundCollection = &SoundCollection {
 	},
 	Sounds: []*Sound{
 		createSound("xd", 1000, 200),
+		createSound("xdd", 1000, 200),
 		createSound("uśmiech", 500, 200),
+		createSound("mmm", 500, 200),
+		createSound("mikro", 5, 200),
+		createSound("mikro2", 5, 200),
+		createSound("rip", 5, 200),
 	},
 }
 
