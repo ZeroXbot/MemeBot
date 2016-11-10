@@ -130,6 +130,16 @@ var KUR *SoundCollection = &SoundCollection {
 	},
 }
 
+var JP *SoundCollection = &SoundCollection {
+	Prefix: "jp",
+	Commands: []string{
+		"!jp",
+	},
+	Sounds: []*Sound{
+		createSound("niewiem", 1000, 200),
+	},
+}
+
 var REAKCJA *SoundCollection = &SoundCollection {
 	Prefix: "reakcja",
 	Commands: []string{
@@ -143,6 +153,39 @@ var REAKCJA *SoundCollection = &SoundCollection {
 		createSound("mikro", 5, 200),
 		createSound("mikro2", 5, 200),
 		createSound("rip", 5, 200),
+	},
+}
+
+var AHUS *SoundCollection = &SoundCollection {
+	Prefix: "ahus",
+	Commands: []string{
+		"!ahus",
+	},
+	Sounds: []*Sound{
+		createSound("smakuje", 1000, 200),
+		createSound("no", 1000, 200),
+		createSound("dobre", 1000, 200),
+		createSound("dobre2", 700, 200),
+		createSound("rak", 700, 200),
+		createSound("3minuty", 600, 200),
+		createSound("dank", 500, 200),
+		createSound("nieśmieszne", 500, 200),
+		createSound("co", 500, 200),
+		createSound("co2", 200, 200),
+		createSound("policja", 500, 200),
+		createSound("policja2", 200, 200),
+		createSound("podoba", 200, 200),
+	},
+}
+
+var WAKE *SoundCollection = &SoundCollection {
+	Prefix: "wake",
+	Commands: []string{
+		"!wake",
+	},
+	Sounds: []*Sound{
+		createSound("tts", 1000, 200),
+		createSound("meup", 800, 200),
 	},
 }
 
@@ -273,6 +316,9 @@ var COLLECTIONS []*SoundCollection = []*SoundCollection{
 	DOBRE,
 	KUR,
 	REAKCJA,
+	AHUS,
+	JP,
+	WAKE,
 }
 
 // Create a Sound struct
