@@ -189,6 +189,69 @@ var WAKE *SoundCollection = &SoundCollection {
 	},
 }
 
+var KS *SoundCollection = &SoundCollection {
+	Prefix: "ks",
+	Commands: []string{
+		"!ks",
+	},
+	Sounds: []*Sound{
+		createSound("awans", 1000, 200),
+		createSound("banan", 1000, 200),
+		createSound("debile", 1000, 200),
+		createSound("haxy", 1000, 200),
+		createSound("historia", 1000, 200),
+		createSound("japier", 1000, 200),
+		createSound("jmnie", 1000, 200),
+		createSound("kryj", 1000, 200),
+		createSound("mak", 1000, 200),
+		createSound("mak2", 1000, 200),
+		createSound("nice", 1000, 200),
+		createSound("niebiescy", 1000, 200),
+		createSound("wyszedl", 1000, 200),
+	},
+}
+
+var Q *SoundCollection = &SoundCollection {
+	Prefix: "q",
+	Commands: []string{
+		"!q",
+	},
+	Sounds: []*Sound{
+		createSound("ciota", 1000, 200),
+		createSound("fart", 1000, 200),
+		createSound("inba", 1000, 200),
+		createSound("kur", 1000, 200),
+		createSound("nie", 1000, 200),
+		createSound("noja", 1000, 200),
+		createSound("zdychaj", 1000, 200),
+		createSound("zero", 1000, 200),
+	},
+}
+
+var EGON *SoundCollection = &SoundCollection {
+	Prefix: "egon",
+	Commands: []string{
+		"!egon",
+	},
+	Sounds: []*Sound{
+		createSound("11", 1000, 200),
+		createSound("chora", 1000, 200),
+		createSound("domycia", 1000, 200),
+		createSound("wmorde", 1000, 200),
+		createSound("zpokoju", 1000, 200),
+	},
+}
+
+var SONIC *SoundCollection = &SoundCollection {
+	Prefix: "sonic",
+	Commands: []string{
+		"!sonic",
+	},
+	Sounds: []*Sound{
+		createSound("fast", 1000, 200),
+	},
+}
+
 var AIRHORN *SoundCollection = &SoundCollection{
 	Prefix: "airhorn",
 	Commands: []string{
@@ -319,6 +382,10 @@ var COLLECTIONS []*SoundCollection = []*SoundCollection{
 	AHUS,
 	JP,
 	WAKE,
+	KS,
+	Q,
+	EGON,
+	SONIC,
 }
 
 // Create a Sound struct
