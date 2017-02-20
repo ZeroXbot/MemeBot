@@ -14,6 +14,10 @@ import (
 	"strings"
 	"text/tabwriter"
 	"time"
+	"net/http"
+	"io/ioutil"
+	"encoding/json"
+	// "regexp"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/bwmarrin/discordgo"
@@ -153,6 +157,7 @@ var REAKCJA *SoundCollection = &SoundCollection {
 		createSound("mikro", 5, 200),
 		createSound("mikro2", 5, 200),
 		createSound("rip", 5, 200),
+		createSound("omg", 5, 200),
 	},
 }
 
@@ -255,7 +260,7 @@ var SONIC *SoundCollection = &SoundCollection {
 var AIRHORN *SoundCollection = &SoundCollection{
 	Prefix: "airhorn",
 	Commands: []string{
-		"!airhornx",
+		"!airhorn",
 	},
 	Sounds: []*Sound{
 		createSound("default", 1000, 250),
@@ -279,8 +284,8 @@ var KHALED *SoundCollection = &SoundCollection{
 	Prefix:    "another",
 	ChainWith: AIRHORN,
 	Commands: []string{
-		"!anothax",
-		"!anothaonex",
+		"!anotha",
+		"!anothaone",
 	},
 	Sounds: []*Sound{
 		createSound("one", 1, 250),
@@ -292,8 +297,8 @@ var KHALED *SoundCollection = &SoundCollection{
 var CENA *SoundCollection = &SoundCollection{
 	Prefix: "jc",
 	Commands: []string{
-		"!johncenax",
-		"!cenax",
+		"!johncena",
+		"!cena",
 	},
 	Sounds: []*Sound{
 		createSound("airhorn", 1, 250),
@@ -308,10 +313,10 @@ var CENA *SoundCollection = &SoundCollection{
 var ETHAN *SoundCollection = &SoundCollection{
 	Prefix: "ethan",
 	Commands: []string{
-		"!ethanx",
-		"!ebx",
-		"!ethanbradberryx",
-		"!h3h3x",
+		"!ethan",
+		"!eb",
+		"!ethanbradberry",
+		"!h3h3",
 	},
 	Sounds: []*Sound{
 		createSound("areyou_classic", 100, 250),
@@ -331,8 +336,8 @@ var ETHAN *SoundCollection = &SoundCollection{
 var COW *SoundCollection = &SoundCollection{
 	Prefix: "cow",
 	Commands: []string{
-		"!stanx",
-		"!stanislavx",
+		"!stan",
+		"!stanislav",
 	},
 	Sounds: []*Sound{
 		createSound("herd", 10, 250),
@@ -344,8 +349,8 @@ var COW *SoundCollection = &SoundCollection{
 var BIRTHDAY *SoundCollection = &SoundCollection{
 	Prefix: "birthday",
 	Commands: []string{
-		"!birthdayx",
-		"!bdayx",
+		"!birthday",
+		"!bday",
 	},
 	Sounds: []*Sound{
 		createSound("horn", 50, 250),
@@ -358,8 +363,8 @@ var BIRTHDAY *SoundCollection = &SoundCollection{
 var WOW *SoundCollection = &SoundCollection{
 	Prefix: "wow",
 	Commands: []string{
-		"!wowthatscoolx",
-		"!wtcx",
+		"!wowthatscool",
+		"!wtc",
 	},
 	Sounds: []*Sound{
 		createSound("thatscool", 50, 250),
@@ -387,6 +392,9 @@ var COLLECTIONS []*SoundCollection = []*SoundCollection{
 	EGON,
 	SONIC,
 }
+
+// var EMOJIS map[string]int = make(map[string]int)
+// var EmojisRegexp *Regexp = regexp.Compile("<:[A-Z,a-z,0-9]+:([0-9]+)>")
 
 // Create a Sound struct
 func createSound(Name string, Weight int, PartDelay int) *Sound {
@@ -644,7 +652,7 @@ func playSound(play *Play, vc *discordgo.VoiceConnection) (err error) {
 
 func onReady(s *discordgo.Session, event *discordgo.Ready) {
 	log.Info("Recieved READY payload")
-	s.UpdateStatus(0, "airhornbot.com")
+	s.UpdateStatus(0, "kabarecik")
 }
 
 func onGuildCreate(s *discordgo.Session, event *discordgo.GuildCreate) {
@@ -794,6 +802,36 @@ func handleBotControlMessages(s *discordgo.Session, m *discordgo.MessageCreate, 
 
 func onMessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if len(m.Content) <= 0 || (m.Content[0] != '!' && len(m.Mentions) < 1) {
+		if m.Author.Username == "Tit" {
+			if randomRange(0, 3000) < len(m.Content) {
+				s.ChannelMessageSend(m.ChannelID, "Japa paper")
+			}
+		}
+
+		if strings.Contains(strings.ToLower(m.Content), "xd") {
+			t := randomRange(0, 100)
+			if t < 6 {
+				if t < 3 {
+					s.ChannelMessageSend(m.ChannelID, "XD")
+				} else {
+					s.ChannelMessageSend(m.ChannelID, "Nie wiem czy takie śmieszne.")
+				}
+			}
+		}
+
+		// matches := EmojisRegexp.FindAllStringSubmatch(m.Content)
+
+		// for _, match := range matches {
+		// 	n, ok := EMOJIS[match[1]]
+		// 	if ok {
+		// 		EMOJIS[match[1]] := n+1
+		// 	} else {
+		// 		EMOJIS[match[1]] := 1
+		// 	}
+		// }
+
+		log.Info(m.Content)
+
 		return
 	}
 
@@ -833,6 +871,60 @@ func onMessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 			handleBotControlMessages(s, m, parts, guild)
 		}
 		return
+	}
+
+	if parts[0] == "!help" {
+		var helpBuf bytes.Buffer
+
+		helpBuf.WriteString("Dostępne komendy dźwięków:\n")
+		for _, coll := range COLLECTIONS {
+			helpBuf.WriteString("**")
+			helpBuf.WriteString(coll.Commands[0])
+			helpBuf.WriteString("** ")
+			for _, s := range coll.Sounds {
+				helpBuf.WriteString(s.Name)
+				helpBuf.WriteString(" ")
+			}
+			helpBuf.WriteString("\n")
+		}
+
+		s.ChannelMessageSend(m.ChannelID, helpBuf.String())
+	}
+
+	if parts[0] == "!streams" {
+		resp, err := http.Get("https://api.twitch.tv/kraken/streams/?client_id=04ccfo6s9potc4cj3mc2xfp3qbj9o9&game=Rocket%20League&limit=10")
+		if err != nil {
+			s.ChannelMessageSend(m.ChannelID, "Whoops. Nie otrzymałem odpowiedzi od serwera.")
+			return
+		}
+
+		defer resp.Body.Close()
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			s.ChannelMessageSend(m.ChannelID, "Whoops. Nie umiem odczytać odpowiedzi.")
+			return
+		}
+
+		var sdata map[string]interface{}
+		err = json.Unmarshal(body, &sdata)
+		if err != nil {
+			s.ChannelMessageSend(m.ChannelID, "Whoops. Nie umiem odczytać odpowiedzi (JSON zrypany).")
+			return
+		}
+
+		var msgBuf bytes.Buffer
+
+		streams := sdata["streams"].([]interface{})
+		for k, streamI := range streams {
+			stream := streamI.(map[string]interface{})
+			viewers := int(stream["viewers"].(float64))
+			channel := stream["channel"].(map[string]interface{})
+			status := channel["status"].(string)
+			name := channel["name"].(string)
+			msgBuf.WriteString(fmt.Sprintf("**%d.** twitch.tv/%s - %d\n%s\n", k+1, name, viewers, status))
+		}
+
+		s.ChannelMessageSend(m.ChannelID, msgBuf.String())
 	}
 
 	// Find the collection for the command we got
@@ -925,7 +1017,7 @@ func main() {
 	}
 
 	// We're running!
-	log.Info("AIRHORNBOT is ready to horn it up.")
+	log.Info("MEMEBOT is ready to śmiesznie.")
 
 	// Wait for a signal to quit
 	c := make(chan os.Signal, 1)
